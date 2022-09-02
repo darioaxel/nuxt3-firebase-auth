@@ -84,7 +84,7 @@ export default defineNuxtPlugin(nuxtApp => {
 
 This is mostly documented here (opens new window)within Vuetify's explanation. The key difference is we use nuxtApp.vueApp.use(vuetify) rather than app.use(vuetify).
 
-#Configure Nuxt 3 to use our new plugin
+# Configure Nuxt 3 to use our new plugin
 Our last bit of configuration occurs in our nuxt.config.ts file. This is where we tell Nuxt how to properly find and build Vuetify's sass.
 ```javascript
 // nuxt.config.ts
@@ -102,4 +102,38 @@ export default defineNuxtConfig({
     },
   },
 })
+```
+
+# Using .ENV Runtime variables to store keys
+
+Runtime config values are automatically replaced by matching environment variables at runtime. For this to work, you must have a fallback value (which can just be an empty string) defined in your nuxt.config.
+
+Example:
+```
+//.env
+NUXT_API_SECRET=api_secret_token
+NUXT_PUBLIC_API_BASE=https://nuxtjs.org
+```
+
+```javascript
+nuxt.config.ts
+export default defineNuxtConfig({
+  runtimeConfig: {
+    apiSecret: '', // can be overridden by NUXT_API_SECRET environment variable
+    public: {
+      apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
+    }
+  },
+})
+```
+
+## Plugins
+If you want to use the runtime config within any (custom) plugin, you can use useRuntimeConfig() inside of your defineNuxtPlugin function.
+
+For Example:
+```javascript
+export default defineNuxtPlugin((nuxtApp) => {
+  const config = useRuntimeConfig()
+  console.log('API base URL:', config.public.apiBase)
+});
 ```
