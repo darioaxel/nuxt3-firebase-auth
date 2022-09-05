@@ -1,6 +1,7 @@
 <template>
   <div>
-     <button class="button">Click Me</button>
+     <button class="button" @click="signIn">Sign in</button>
+     <button class="button" @click="signOut">Sign out</button>
   </div>
 </template>
 <script setup>
@@ -12,11 +13,19 @@ const signIn = async () => {
 
   const credentials = await signInUser(email, password);
   console.log("Credentials: ", credentials);
+}
+
+const signOut = async () => {
+  const result = await signoutUser();
+  console.log("result: ", result);
 
 }
 
 onMounted(async () => {
- 
+  /** const email = "daurena@iespabloserrano.com";
+  const password = "123456";
+  const credentials = await createUser(email, password);
+  console.log(credentials); */
 });
   
 </script>

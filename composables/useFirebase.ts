@@ -2,7 +2,8 @@ import {
     getAuth, 
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
-    onAuthStateChanged 
+    onAuthStateChanged,
+    signOut
 } from "firebase/auth";
 
 export const createUser = async (email, password) => {
@@ -38,7 +39,16 @@ export const initUser = async () => {
       // User is signed out
       // ...
         }
-    });
+    });   
 }
 
+
+export const signoutUser = async () => {
+  const auth = getAuth();  
+  const results = await signOut(auth).catch((error) => {
+    console.log("An error happened in signout");
+   });
+   console.log("No error happened in signout");
+  return results;
+}
 
